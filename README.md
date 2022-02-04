@@ -111,8 +111,11 @@ terraform apply --auto-approve
 ```
 This will create a VPC along with Private/Public subnets, required IAM roles, Security Groups, ALB with 2 listeners/target groups(port 80 for the main listener and port 8080 for Blue/Green testing), ECS Cluster along with a Fargate service and a CodePipeline for continuous deployment.
 **Step 6:** Once Terraform execution is completed, access your Route 53 DNS to make sure things are working.
+
 ![alt text](https://github.com/hakim-arhazzal/ECS-Fargate-Terraform-API/blob/main/pictures/1.PNG?raw=true)
+
 ![alt text](https://github.com/hakim-arhazzal/ECS-Fargate-Terraform-API/blob/main/pictures/2.PNG?raw=true)
+
 **Step 7:** Now make a change to `index.js` file and it will trigger a new deployment which will create new ECS tasks with updated code. You can access the updated code @ <ROUTE53_DNS>:8080.
 If you see our terraform.tfvars file, we’ve specified to shift 10% of traffic every minute to new task set and once traffic is entirely moved to new deployment, previous task set will be deleted after 30 minutes.
 ```sh
@@ -120,13 +123,21 @@ deployment_config_name          ="CodeDeployDefault.ECSLinear10PercentEvery1Minu
 termination_wait_time_in_minutes = 30
 ```
 **Step 8:** Check the deployment progress and how traffic is getting gradully re-routed to new deployment.
+
 ![alt text](https://github.com/hakim-arhazzal/ECS-Fargate-Terraform-API/blob/main/pictures/3.PNG?raw=true)
+
 Once build is successful and deployment is started, you can go to Code Deploy console and check the progress.
+
 ![alt text](https://github.com/hakim-arhazzal/ECS-Fargate-Terraform-API/blob/main/pictures/7.PNG?raw=true)
+
 At this point,2 new ECS fargate tasks will be launched and traffic shifting has already started.
 
 Now if you access our DNS, you’ll see some requests are serving updated version(I changed version from `1.0.1` to `2.0.0`).
+
 ![alt text](https://github.com/hakim-arhazzal/ECS-Fargate-Terraform-API/blob/main/pictures/6.PNG?raw=true)
+
 Once the entire traffic is shifted to new deployment, it’ll wait for 30 minuets an then delete the previous task set. At this point our Blue/Green deployment is completed!
+
 ![alt text](https://github.com/hakim-arhazzal/ECS-Fargate-Terraform-API/blob/main/pictures/8.PNG?raw=true)
+
 **Cleanup:** Make our codepipeline bucket(default bucket name is dev-bucket1998)empty and run `terraform destroy` to delete the infrastructure we created.

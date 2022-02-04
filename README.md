@@ -6,7 +6,7 @@ In this project, we’ll deploy a simple versioning ECS application with Blue/Gr
 
 ## Proposed Architecture
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+(https://github.com/hakim-arhazzal/ECS-Fargate-Terraform-API/blob/main/architecture.png?raw=true)
 
 ## Main goals
 - Zero server maintenance in order to build and deploy new versions of an specific service (deployment take place after each new version)

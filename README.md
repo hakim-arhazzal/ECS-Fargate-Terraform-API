@@ -111,7 +111,7 @@ terraform apply --auto-approve
 ```
 This will create a VPC along with Private/Public subnets, required IAM roles, Security Groups, ALB with 2 listeners/target groups(port 80 for the main listener and port 8080 for Blue/Green testing), ECS Cluster along with a Fargate service and a CodePipeline for continuous deployment.
 **Step 6:** Once Terraform execution is completed, access your Route 53 DNS to make sure things are working.
-![alt text](https://github.com/hakim-arhazzal/ECS-Fargate-Terraform-API/blob/main/pictures/1.png?raw=true)
+![alt text](https://github.com/hakim-arhazzal/ECS-Fargate-Terraform-API/blob/main/pictures/pic_1.png?raw=true)
 ![alt text](https://github.com/hakim-arhazzal/ECS-Fargate-Terraform-API/blob/main/pictures/2.png?raw=true)
 **Step 7:** Now make a change to `index.js` file and it will trigger a new deployment which will create new ECS tasks with updated code. You can access the updated code @ <ROUTE53_DNS>:8080.
 If you see our terraform.tfvars file, we’ve specified to shift 10% of traffic every minute to new task set and once traffic is entirely moved to new deployment, previous task set will be deleted after 30 minutes.

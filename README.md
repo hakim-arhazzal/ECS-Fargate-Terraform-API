@@ -141,3 +141,20 @@ Once the entire traffic is shifted to new deployment, it’ll wait for 30 minuet
 ![alt text](https://github.com/hakim-arhazzal/ECS-Fargate-Terraform-API/blob/main/pictures/8.PNG?raw=true)
 
 **Cleanup:** Make our codepipeline bucket(default bucket name is dev-bucket1998)empty and run `terraform destroy` to delete the infrastructure we created.
+
+## Improvement Deck
+### Infrustructure as code (Terraform)
+One of the most important tools that we might use here is Atlantis for the following reasons.
+- **Increased visibility :**
+When everyone is executing Terraform on their own computers, it's hard to know the current state of your infrastructure. With Atlantis, everything is visible on the pull request. You can view the history of everything that was done to your infrastructure.
+- **Enable collaboration with everyone:**
+You can require approval before the pull request is applied so nothing happens accidentally.
+- **Standardize your workflows:**
+Atlantis locks a directory/workspace until the pull request is merged or the lock is manually deleted. This ensures that changes are applied in the order expected.
+
+## Securing AWS Credentials
+
+For that we can configure AWS VAULT so that:
+- User creation/removal should be centrally managed and audited regularly, with keys regularly rotated.
+- A second factor that isn’t stored on the laptop should be required for security sensitive operations.
+- AWS Credentials should never be stored at rest in plaintext, or ideally even in memory.
